@@ -1,0 +1,18 @@
+{
+  "name": "fsom",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "fuse-bindings": "^2.11.2"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0"
+  },
+  "scripts": {
+    "test": "jest",
+    "watch": "jest --watchAll"
+  },
+  "author": "",
+  "license": "ISC"
+}
