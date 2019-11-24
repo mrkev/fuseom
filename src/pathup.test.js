@@ -1,5 +1,5 @@
 const { pathup, parse } = require("./pathup");
-const { simple } = require("./structure");
+const { simple } = require("../example/simple");
 
 // d /
 // f /test "nice\n"
@@ -7,13 +7,13 @@ const { simple } = require("./structure");
 // f /hello/world "HELLO WORLD\n"
 
 test("structure simple", () => {
-  expect(pathup("/", simple).type).toEqual("__dir");
-  expect(pathup("/test", simple).type).toEqual("__file");
-  expect(pathup("/hello", simple).type).toEqual("__dir");
+  expect(pathup("/", simple)._type).toEqual("__dir");
+  expect(pathup("/test", simple)._type).toEqual("__file");
+  expect(pathup("/hello", simple)._type).toEqual("__dir");
 });
 
 test("structure nested", () => {
-  expect(pathup("/hello/world", simple).type).toEqual("__file");
+  expect(pathup("/hello/world", simple)._type).toEqual("__file");
 });
 
 test("contents", () => {

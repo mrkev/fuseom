@@ -16,7 +16,7 @@ function parse(path) {
 
 // string -> obj
 function pathup(path, arch) {
-  if (arch.type !== "__dir") {
+  if (arch._type !== "__dir") {
     throw new Error("ROOT is not a __dir");
   }
 

@@ -1,4 +1,4 @@
-const { simple } = require("../structure");
+const { simple } = require("../../example/simple");
 const open = require("./open").forStructure(simple);
 
 test("open", done => {

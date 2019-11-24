@@ -15,7 +15,7 @@ const forStructure = structure => (path, cb) => {
     return;
   }
 
-  if (obj === null || obj.type !== "__dir") {
+  if (obj === null || obj._type !== "__dir") {
     cb(0);
   } else {
     cb(0, Object.keys(obj.children));
