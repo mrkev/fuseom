@@ -1,4 +1,5 @@
 const Node = require("./Node.js");
+const Mode = require("stat-mode");
 
 class Directory extends Node {
   get _type() {
@@ -21,6 +22,20 @@ class Directory extends Node {
     this.ctime = options.ctime || new Date();
     this.nlink = options.nlink || 1;
 
+    this.mode = new Mode(options.mode != null ? options.mode : 0);
+    this.mode.isDirectory(true);
+    if (options.mode == null) {
+      this.mode.owner.read = true;
+      this.mode.group.read = true;
+      this.mode.others.read = true;
+      this.mode.owner.write = true;
+      this.mode.group.write = true;
+      this.mode.others.write = true;
+      this.mode.owner.execute = true;
+      this.mode.group.execute = true;
+      this.mode.others.execute = true;
+    }
+
     (options.children || []).forEach(node => {
       this.appendChild(node);
     });
@@ -32,9 +47,8 @@ class Directory extends Node {
       atime: this.atime,
       ctime: this.ctime,
       nlink: this.nlink,
-      size: 100,
-      // TODO: what does mode mean
-      mode: 16877,
+      size: 100, //todo
+      mode: this.mode.valueOf(),
       uid: process.getuid ? process.getuid() : 0,
       gid: process.getgid ? process.getgid() : 0
     };

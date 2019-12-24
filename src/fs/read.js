@@ -20,7 +20,6 @@ const forStructure = structure => (path, fd, buf, len, pos, cb) => {
     var str = obj.contents.slice(pos, pos + len);
     if (!str) return cb(0);
     buf.write(str);
-    console.log(str);
     return cb(str.length);
   } else {
     console.log("INVALID OBJECT OF TYPE", obj._type);

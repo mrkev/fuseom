@@ -1,4 +1,5 @@
 const Node = require("./Node.js");
+const Mode = require("stat-mode");
 
 class File extends Node {
   get _type() {
@@ -22,6 +23,12 @@ class File extends Node {
 
     this.nlink = options.nlink || 1;
 
+    this.mode = new Mode(options.mode != null ? options.mode : 0);
+    this.mode.isFile(true);
+    this.mode.owner.read = true;
+    this.mode.group.read = true;
+    this.mode.others.read = true;
+
     this.contents = options.contents || "";
   }
 
@@ -32,7 +39,7 @@ class File extends Node {
       ctime: this.ctime,
       nlink: this.nlink,
       size: this.contents.length,
-      mode: 33188,
+      mode: this.mode.valueOf(),
       uid: process.getuid ? process.getuid() : 0,
       gid: process.getgid ? process.getgid() : 0
     };

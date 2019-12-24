@@ -29,7 +29,7 @@ const simple2 = dir({
 });
 
 for (var i = 0; i < 20; i++) {
-  const filei = new File({ name: `num-${i}`, contents: String(i) });
+  const filei = new File({ name: `num-${i}`, contents: "" + i });
   simple2.appendChild(filei);
 }
 
