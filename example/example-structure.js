@@ -28,9 +28,19 @@ const simple2 = dir({
   ]
 });
 
-let timer;
+const withEvent = new Directory({ name: "withEvent", children: [] });
+simple2.appendChild(withEvent);
 
+const onOpendir = () => console.log("Opened this dir!");
+const onReleasedir = () => console.log("Released this dir!");
+
+let timer;
 function startAdding() {
+  // Evented directory
+  withEvent.addListener("opendir", onOpendir);
+  withEvent.addListener("releasedir", onReleasedir);
+
+  // Async-added files
   let i = 0;
   timer = setTimeout(function append() {
     const filei = new File({ name: `num-${i}`, contents: "" + i });
@@ -43,6 +53,8 @@ function startAdding() {
 }
 
 function stopAdding() {
+  withEvent.removeListener("opendir", onOpendir);
+  withEvent.removeListener("releasedir", onReleasedir);
   clearTimeout(timer);
 }
 
