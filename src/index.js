@@ -10,10 +10,28 @@ module.exports = {
 
     const mounted = new events.EventEmitter();
 
-    fuse.mount(mountPath, { getattr, open, read, readdir }, function(err) {
-      if (err) throw err;
-      console.log("filesystem mounted on " + mountPath);
-    });
+    fuse.mount(
+      mountPath,
+      {
+        getattr,
+        open,
+        read,
+        readdir,
+        opendir(path, flags, cb) {
+          console.log("opendir", path, flags);
+          cb(0);
+        },
+        releasedir(path, fd, cb) {
+          console.log("releasedir", path, fd);
+          cb(0);
+        }
+      },
+      function(err) {
+        ``;
+        if (err) throw err;
+        console.log("filesystem mounted on " + mountPath);
+      }
+    );
 
     process.on("SIGINT", function exit() {
       fuse.unmount(mountPath, function(err) {

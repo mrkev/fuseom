@@ -1,6 +1,6 @@
 const { mount } = require("../src/index.js");
 
-const { simple2, startAdding, stopAdding } = require("./structure");
+const { simple2, startAdding, stopAdding } = require("./example-structure");
 
 if (require.main === module) {
   const mountPath = process.platform !== "win32" ? "./mnt2" : "M:\\";
