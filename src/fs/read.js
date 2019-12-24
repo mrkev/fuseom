@@ -1,32 +1,28 @@
-const { pathup } = require("../pathup");
+const { withFile } = require("../pathup");
 const fuse = require("fuse-bindings");
 
 const forStructure = structure => (path, fd, buf, len, pos, cb) => {
-  let obj = null;
+  if (process.env.VERBOSE) {
+    console.log("read(%s, %d, %d, %d)", path, fd, len, pos);
+  }
+  let file = null;
   try {
-    obj = pathup(path, structure);
+    file = withFile(path, structure);
   } catch (e) {
     console.error(e);
+    return cb(fuse.ENOENT);
   }
 
-  if (obj === null) {
-    cb(fuse.ENOENT);
-    return;
-  } else if (obj._type === "__dir") {
-    cb(-1);
-    return;
-  } else if (obj._type === "__file") {
-    if (process.env.VERBOSE) {
-      console.log("read(%s, %d, %d, %d)", path, fd, len, pos);
-    }
-    var str = obj.contents.slice(pos, pos + len);
+  if (typeof file.contents === "string") {
+    const str = file.contents.slice(pos, pos + len);
     if (!str) return cb(0);
     buf.write(str);
     return cb(str.length);
+  } else if (Buffer.isBuffer(file.contents)) {
+    const numbytes = file.contents.copy(buf, 0, pos, pos + len);
+    return cb(numbytes);
   } else {
-    console.log("INVALID OBJECT OF TYPE", obj._type);
-    cb(fuse.ENOENT);
-    return;
+    cb(-1);
   }
 };
 
