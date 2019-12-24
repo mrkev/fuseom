@@ -26,13 +26,15 @@ class Directory extends Node {
     this.mode.isDirectory(true);
     if (options.mode == null) {
       this.mode.owner.read = true;
-      this.mode.group.read = true;
-      this.mode.others.read = true;
-      this.mode.owner.write = true;
-      this.mode.group.write = true;
-      this.mode.others.write = true;
+      this.mode.owner.write = false;
       this.mode.owner.execute = true;
+
+      this.mode.group.read = true;
+      this.mode.group.write = false;
       this.mode.group.execute = true;
+
+      this.mode.others.read = true;
+      this.mode.others.write = false;
       this.mode.others.execute = true;
     }
 

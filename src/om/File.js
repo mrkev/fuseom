@@ -25,9 +25,19 @@ class File extends Node {
 
     this.mode = new Mode(options.mode != null ? options.mode : 0);
     this.mode.isFile(true);
-    this.mode.owner.read = true;
-    this.mode.group.read = true;
-    this.mode.others.read = true;
+    if (options.mode == null) {
+      this.mode.owner.read = true;
+      this.mode.owner.write = false;
+      this.mode.owner.execute = false;
+
+      this.mode.group.read = true;
+      this.mode.group.write = false;
+      this.mode.group.execute = false;
+
+      this.mode.others.read = true;
+      this.mode.others.write = false;
+      this.mode.others.execute = false;
+    }
 
     this.contents = options.contents || "";
   }
