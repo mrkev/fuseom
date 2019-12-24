@@ -9,6 +9,7 @@ module.exports = {
     const readdir = require("./fs/readdir").forStructure(structure);
     const opendir = require("./fs/opendir").forStructure(structure);
     const releasedir = require("./fs/releasedir").forStructure(structure);
+    const unlink = require("./fs/unlink").forStructure(structure);
 
     const mounted = new events.EventEmitter();
 
@@ -20,7 +21,8 @@ module.exports = {
         read,
         readdir,
         opendir,
-        releasedir
+        releasedir,
+        unlink
       },
       function(err) {
         if (err) throw err;

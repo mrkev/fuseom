@@ -9,7 +9,7 @@ function file(options) {
   return new File(options);
 }
 
-const image = new Buffer(
+const image = Buffer.from(
   "iVBORw0KGgoAAAANSUhEUgAAABkAAAATCAYAAABlcqYFAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAA" +
     "CA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAAsTAAALEwEAmpwYAAABWWlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPHg6eG1wbWV0" +
     "YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNS40LjAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly" +
@@ -53,9 +53,16 @@ const simple2 = dir({
     })
   ]
 });
+simple2.mode.owner.write = true;
 
-const withEvent = new Directory({ name: "withEvent", children: [] });
-simple2.appendChild(withEvent);
+const fileEvents = new File({ name: "fileEvents", contents: "" });
+fileEvents.mode.owner.write = true;
+simple2.appendChild(fileEvents);
+
+const onUnlink = () => console.log("Unlinked this file!");
+
+const dirEvents = new Directory({ name: "dirEvents", children: [] });
+simple2.appendChild(dirEvents);
 
 const onOpendir = () => console.log("Opened this dir!");
 const onReleasedir = () => console.log("Released this dir!");
@@ -63,8 +70,11 @@ const onReleasedir = () => console.log("Released this dir!");
 let timer;
 function startAdding() {
   // Evented directory
-  withEvent.addListener("opendir", onOpendir);
-  withEvent.addListener("releasedir", onReleasedir);
+  dirEvents.addListener("opendir", onOpendir);
+  dirEvents.addListener("releasedir", onReleasedir);
+
+  // Evented file
+  fileEvents.addListener("unlink", onUnlink);
 
   // Async-added files
   let i = 0;
@@ -79,8 +89,9 @@ function startAdding() {
 }
 
 function stopAdding() {
-  withEvent.removeListener("opendir", onOpendir);
-  withEvent.removeListener("releasedir", onReleasedir);
+  dirEvents.removeListener("opendir", onOpendir);
+  dirEvents.removeListener("releasedir", onReleasedir);
+  fileEvents.removeListener("unlink", onUnlink);
   clearTimeout(timer);
 }
 
