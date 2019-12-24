@@ -70,6 +70,17 @@ class Directory extends Node {
 
     this.children[node.name] = node;
   }
+
+  removeChild(node) {
+    if (!(node instanceof Node)) {
+      console.error("Can't remove non-node from directory.");
+      return;
+    }
+
+    if (this.children[node.name]) {
+      delete this.children[node.name];
+    }
+  }
 }
 
 module.exports = Directory;
