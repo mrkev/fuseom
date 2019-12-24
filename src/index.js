@@ -1,4 +1,5 @@
 const fuse = require("fuse-bindings");
+var events = require("events");
 
 module.exports = {
   mount(mountPath, structure) {
@@ -6,6 +7,8 @@ module.exports = {
     const open = require("./fs/open").forStructure(structure);
     const read = require("./fs/read").forStructure(structure);
     const readdir = require("./fs/readdir").forStructure(structure);
+
+    const mounted = new events.EventEmitter();
 
     fuse.mount(mountPath, { getattr, open, read, readdir }, function(err) {
       if (err) throw err;
@@ -18,8 +21,11 @@ module.exports = {
           console.log("filesystem at " + mountPath + " not unmounted", err);
         } else {
           console.log("filesystem at " + mountPath + " unmounted");
+          mounted.emit("unmount");
         }
       });
     });
+
+    return mounted;
   }
 };

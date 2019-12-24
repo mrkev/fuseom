@@ -28,11 +28,26 @@ const simple2 = dir({
   ]
 });
 
-for (var i = 0; i < 20; i++) {
-  const filei = new File({ name: `num-${i}`, contents: "" + i });
-  simple2.appendChild(filei);
+let timer;
+
+function startAdding() {
+  let i = 0;
+  timer = setTimeout(function append() {
+    const filei = new File({ name: `num-${i}`, contents: "" + i });
+    simple2.appendChild(filei);
+    if (i < 10) {
+      i++;
+      timer = setTimeout(append, 1000);
+    }
+  }, 1000);
+}
+
+function stopAdding() {
+  clearTimeout(timer);
 }
 
 module.exports = {
-  simple2
+  simple2,
+  startAdding,
+  stopAdding
 };

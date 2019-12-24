@@ -7,7 +7,7 @@ var toFlag = function(flags) {
 
 let fd = 0;
 const forStructure = structure => (path, flags, cb) => {
-  // console.log("open(%s, %d)", path, flags);
+  if (process.env.VERBOSE) console.log("open(%s, %d)", path, flags);
   var flag = toFlag(flags); // convert flags to a node style string
   cb(0, fd++); // 42 is a file descriptor
 };

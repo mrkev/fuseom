@@ -16,7 +16,9 @@ const forStructure = structure => (path, fd, buf, len, pos, cb) => {
     cb(-1);
     return;
   } else if (obj._type === "__file") {
-    // console.log("read(%s, %d, %d, %d)", path, fd, len, pos);
+    if (process.env.VERBOSE) {
+      console.log("read(%s, %d, %d, %d)", path, fd, len, pos);
+    }
     var str = obj.contents.slice(pos, pos + len);
     if (!str) return cb(0);
     buf.write(str);

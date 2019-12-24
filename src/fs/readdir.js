@@ -2,7 +2,7 @@ const { pathup } = require("../pathup");
 const fuse = require("fuse-bindings");
 
 const forStructure = structure => (path, cb) => {
-  // console.log("readdir(%s)", path);
+  if (process.env.VERBOSE) console.log("readdir(%s)", path);
   let obj = null;
   try {
     obj = pathup(path, structure);

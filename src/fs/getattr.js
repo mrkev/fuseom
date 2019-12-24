@@ -2,13 +2,14 @@ const { pathup } = require("../pathup");
 const fuse = require("fuse-bindings");
 
 const forStructure = structure => (path, cb) => {
-  // console.log("getattr(%s)", path);
+  if (process.env.VERBOSE) {
+    console.log("getattr(%s)", path);
+  }
   let obj = null;
   try {
     obj = pathup(path, structure);
   } catch (e) {
-    // VERBOSITY, TODO: Toggle
-    if (false) {
+    if (process.env.VERBOSE) {
       console.error("getattr:", e.message);
     }
   }
