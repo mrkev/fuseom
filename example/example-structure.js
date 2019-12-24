@@ -1,14 +1,6 @@
 const Directory = require("../src/om/Directory.js");
 const File = require("../src/om/File.js");
 
-function dir(options) {
-  return new Directory(options);
-}
-
-function file(options) {
-  return new File(options);
-}
-
 const image = Buffer.from(
   "iVBORw0KGgoAAAANSUhEUgAAABkAAAATCAYAAABlcqYFAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAA" +
     "CA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAAsTAAALEwEAmpwYAAABWWlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPHg6eG1wbWV0" +
@@ -31,21 +23,21 @@ const image = Buffer.from(
   "base64"
 );
 
-const simple2 = dir({
+const simple2 = new Directory({
   name: "root",
   children: [
-    file({
+    new File({
       name: "test",
       contents: "nice\n"
     }),
-    file({
+    new File({
       name: "img.png",
       contents: image
     }),
-    dir({
+    new Directory({
       name: "hello",
       children: [
-        file({
+        new File({
           name: "world",
           contents: "HELLO WORLD\n"
         })
@@ -55,47 +47,51 @@ const simple2 = dir({
 });
 simple2.mode.owner.write = true;
 
+// This file will log file events
 const fileEvents = new File({ name: "fileEvents", contents: "" });
 fileEvents.mode.owner.write = true;
 simple2.appendChild(fileEvents);
 
+const onFileRename = () => console.log("Renamed the file!");
 const onUnlink = () => console.log("Unlinked this file!");
+fileEvents.addListener("unlink", onUnlink);
+fileEvents.addListener("rename", onFileRename);
 
+// This directory will log directory events
 const dirEvents = new Directory({ name: "dirEvents", children: [] });
 dirEvents.mode.owner.write = true;
 simple2.appendChild(dirEvents);
 
 const onOpendir = () => console.log("Opened this dir!");
 const onReleasedir = () => console.log("Released this dir!");
-const onRename = () => console.log("Renamed!");
+const onDirRename = () => console.log("Renamed the directory!");
+const onMkdir = () => console.log("Created subdirectory.");
+dirEvents.addListener("opendir", onOpendir);
+dirEvents.addListener("releasedir", onReleasedir);
+dirEvents.addListener("rename", onDirRename);
+dirEvents.addListener("mkdir", onMkdir);
 
+// Add some files asynchronously
 let timer;
 function startAdding() {
-  // Evented directory
-  dirEvents.addListener("opendir", onOpendir);
-  dirEvents.addListener("releasedir", onReleasedir);
-  dirEvents.addListener("rename", onRename);
-
-  // Evented file
-  fileEvents.addListener("unlink", onUnlink);
-  fileEvents.addListener("rename", onRename);
-
   // Async-added files
   let i = 0;
   timer = setTimeout(function append() {
     const filei = new File({ name: `num-${i}`, contents: "" + i });
     simple2.appendChild(filei);
-    if (i < 10) {
+    if (i < 9) {
       i++;
       timer = setTimeout(append, 1000);
     }
   }, 1000);
 }
 
-function stopAdding() {
+//
+function cleanup() {
   dirEvents.removeListener("opendir", onOpendir);
   dirEvents.removeListener("releasedir", onReleasedir);
   dirEvents.removeListener("rename", onRename);
+  dirEvents.removeListener("mkdir", onMkdir);
   fileEvents.removeListener("unlink", onUnlink);
   fileEvents.removeListener("rename", onRename);
   clearTimeout(timer);
@@ -104,5 +100,5 @@ function stopAdding() {
 module.exports = {
   simple2,
   startAdding,
-  stopAdding
+  cleanup
 };

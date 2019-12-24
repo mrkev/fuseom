@@ -11,6 +11,7 @@ module.exports = {
     const releasedir = require("./fs/releasedir").forStructure(structure);
     const unlink = require("./fs/unlink").forStructure(structure);
     const rename = require("./fs/rename").forStructure(structure);
+    const mkdir = require("./fs/mkdir").forStructure(structure);
 
     const mounted = new events.EventEmitter();
 
@@ -24,7 +25,8 @@ module.exports = {
         opendir,
         releasedir,
         unlink,
-        rename
+        rename,
+        mkdir
       },
       function(err) {
         if (err) throw err;
@@ -35,7 +37,10 @@ module.exports = {
     function attemptUnmount() {
       fuse.unmount(mountPath, function(err) {
         if (err) {
-          console.log("filesystem at " + mountPath + " not unmounted", err);
+          console.log(
+            "filesystem at " + mountPath + " not unmounted",
+            err.message
+          );
         } else {
           console.log("filesystem at " + mountPath + " unmounted");
           mounted.emit("unmount");
