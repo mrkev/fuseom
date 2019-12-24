@@ -2,7 +2,7 @@ const fetch = require("node-fetch");
 const Directory = require("../src/om/Directory.js");
 const File = require("../src/om/File.js");
 const { mount } = require("../src/index.js");
-const mountPath = process.platform !== "win32" ? "./mnt4" : "M:\\";
+const mountPath = process.platform !== "win32" ? "./mnt" : "M:\\";
 
 const tifu = new Directory({
   name: "root",

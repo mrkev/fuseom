@@ -62,19 +62,23 @@ simple2.appendChild(fileEvents);
 const onUnlink = () => console.log("Unlinked this file!");
 
 const dirEvents = new Directory({ name: "dirEvents", children: [] });
+dirEvents.mode.owner.write = true;
 simple2.appendChild(dirEvents);
 
 const onOpendir = () => console.log("Opened this dir!");
 const onReleasedir = () => console.log("Released this dir!");
+const onRename = () => console.log("Renamed!");
 
 let timer;
 function startAdding() {
   // Evented directory
   dirEvents.addListener("opendir", onOpendir);
   dirEvents.addListener("releasedir", onReleasedir);
+  dirEvents.addListener("rename", onRename);
 
   // Evented file
   fileEvents.addListener("unlink", onUnlink);
+  fileEvents.addListener("rename", onRename);
 
   // Async-added files
   let i = 0;
@@ -91,7 +95,9 @@ function startAdding() {
 function stopAdding() {
   dirEvents.removeListener("opendir", onOpendir);
   dirEvents.removeListener("releasedir", onReleasedir);
+  dirEvents.removeListener("rename", onRename);
   fileEvents.removeListener("unlink", onUnlink);
+  fileEvents.removeListener("rename", onRename);
   clearTimeout(timer);
 }
 

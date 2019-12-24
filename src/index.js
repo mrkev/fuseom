@@ -10,6 +10,7 @@ module.exports = {
     const opendir = require("./fs/opendir").forStructure(structure);
     const releasedir = require("./fs/releasedir").forStructure(structure);
     const unlink = require("./fs/unlink").forStructure(structure);
+    const rename = require("./fs/rename").forStructure(structure);
 
     const mounted = new events.EventEmitter();
 
@@ -22,7 +23,8 @@ module.exports = {
         readdir,
         opendir,
         releasedir,
-        unlink
+        unlink,
+        rename
       },
       function(err) {
         if (err) throw err;
@@ -30,7 +32,7 @@ module.exports = {
       }
     );
 
-    process.on("SIGINT", function exit() {
+    function attemptUnmount() {
       fuse.unmount(mountPath, function(err) {
         if (err) {
           console.log("filesystem at " + mountPath + " not unmounted", err);
@@ -39,7 +41,10 @@ module.exports = {
           mounted.emit("unmount");
         }
       });
-    });
+    }
+
+    process.on("SIGINT", attemptUnmount);
+    process.on("uncaughtException", attemptUnmount);
 
     return mounted;
   }

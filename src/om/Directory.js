@@ -39,6 +39,7 @@ class Directory extends Node {
     }
 
     (options.children || []).forEach(node => {
+      node.parent = this;
       this.appendChild(node);
     });
   }
@@ -61,13 +62,12 @@ class Directory extends Node {
       console.error("Can't append non-node to directory.");
       return;
     }
-
     if (this.children[node.name]) {
       console.warn(
         `Duplicate definition of node with name '${node.name}'. The latter will override the former.`
       );
     }
-
+    node.parent = this;
     this.children[node.name] = node;
   }
 
@@ -76,10 +76,17 @@ class Directory extends Node {
       console.error("Can't remove non-node from directory.");
       return;
     }
-
     if (this.children[node.name]) {
+      node.parent = null;
       delete this.children[node.name];
     }
+  }
+
+  getChildNamed(name) {
+    if (this.children[name]) {
+      return this.children[name];
+    }
+    return null;
   }
 }
 
