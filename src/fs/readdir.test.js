@@ -1,5 +1,5 @@
-const { simple } = require("../../example/simple");
-const readdir = require("./readdir").forStructure(simple);
+const { simple2 } = require("../../example/example-structure");
+const readdir = require("./readdir").forStructure(simple2);
 
 test("readdir", done => {
   readdir("/", function(code, contents) {

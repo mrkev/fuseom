@@ -1,5 +1,5 @@
-const { simple } = require("../../example/simple");
-const getattr = require("./getattr").forStructure(simple);
+const { simple2 } = require("../../example/example-structure");
+const getattr = require("./getattr").forStructure(simple2);
 
 test("getattr", done => {
   getattr("/", function(code) {

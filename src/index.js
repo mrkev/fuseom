@@ -7,6 +7,8 @@ module.exports = {
     const open = require("./fs/open").forStructure(structure);
     const read = require("./fs/read").forStructure(structure);
     const readdir = require("./fs/readdir").forStructure(structure);
+    const opendir = require("./fs/opendir").forStructure(structure);
+    const releasedir = require("./fs/releasedir").forStructure(structure);
 
     const mounted = new events.EventEmitter();
 
@@ -17,17 +19,10 @@ module.exports = {
         open,
         read,
         readdir,
-        opendir(path, flags, cb) {
-          console.log("opendir", path, flags);
-          cb(0);
-        },
-        releasedir(path, fd, cb) {
-          console.log("releasedir", path, fd);
-          cb(0);
-        }
+        opendir,
+        releasedir
       },
       function(err) {
-        ``;
         if (err) throw err;
         console.log("filesystem mounted on " + mountPath);
       }

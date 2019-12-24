@@ -1,5 +1,5 @@
-const { simple } = require("../../example/simple");
-const read = require("./read").forStructure(simple);
+const { simple2 } = require("../../example/example-structure");
+const read = require("./read").forStructure(simple2);
 
 test("read", done => {
   read(
