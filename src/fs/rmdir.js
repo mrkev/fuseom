@@ -1,18 +1,16 @@
-const { withFile } = require("../pathup");
+const { withDir } = require("../pathup");
 const fuse = require("fuse-bindings");
 
 const forStructure = structure => (path, cb) => {
-  if (process.env.VERBOSE) console.log("unlink(%s, %d)", path);
+  if (process.env.VERBOSE) console.log("rmdir(%s, %d)", path);
 
-  let file = null;
+  let dir = null;
   try {
-    file = withFile(path, structure);
+    dir = withDir(path, structure);
   } catch (e) {
     console.error(e);
     cb(-1);
   }
-
-  file.emit("unlink");
 
   cb(0);
 };

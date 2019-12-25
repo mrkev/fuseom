@@ -12,21 +12,48 @@ module.exports = {
     const unlink = require("./fs/unlink").forStructure(structure);
     const rename = require("./fs/rename").forStructure(structure);
     const mkdir = require("./fs/mkdir").forStructure(structure);
+    const rmdir = require("./fs/rmdir").forStructure(structure);
 
     const mounted = new events.EventEmitter();
 
     fuse.mount(
       mountPath,
       {
+        // init,
+        // access,
+        // statfs,
         getattr,
-        open,
-        read,
+        // fgetattr,
+        // flush,
+        // fsync,
+        // fsyncdir,
         readdir,
+        // truncate,
+        // ftruncate,
+        // readlink,
+        // readlink,
+        // chown,
+        // chmod,
+        // mknod,
+        // setxattr,
+        // getxattr,
+        // listxattr,
+        // removexattr,
+        open,
         opendir,
+        read,
+        // write,
+        // release,
         releasedir,
+        // create,
+        // utimens,
         unlink,
         rename,
-        mkdir
+        // link,
+        // symlink,
+        mkdir,
+        rmdir
+        // destroy,
       },
       function(err) {
         if (err) throw err;
