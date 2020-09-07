@@ -1,5 +1,5 @@
 const { withFile } = require("../pathup");
-const fuse = require("fuse-bindings");
+const fuse = require("fuse-native");
 
 const forStructure = (structure) => (path, cb) => {
   if (process.env.VERBOSE) console.log("unlink(%s, %d)", path);

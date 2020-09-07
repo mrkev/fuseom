@@ -1,5 +1,5 @@
 const { withFile } = require("../pathup");
-const fuse = require("fuse-bindings");
+const fuse = require("fuse-native");
 
 const forStructure = (structure) => (path, fd, buf, len, pos, cb) => {
   if (process.env.VERBOSE) {

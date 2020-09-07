@@ -1,5 +1,5 @@
 const { withDir } = require("../pathup");
-const fuse = require("fuse-bindings");
+const fuse = require("fuse-native");
 
 const forStructure = (structure) => (path, fd, cb) => {
   if (process.env.VERBOSE) console.log("releasedir(%s, %d)", path, fd);

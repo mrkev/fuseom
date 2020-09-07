@@ -4,13 +4,13 @@
   "description": "FUSE object model",
   "main": "src/index.js",
   "dependencies": {
-    "fuse-bindings": "^2.11.2",
-    "node-fetch": "^2.6.0",
+    "fuse-native": "^2.2.6",
+    "node-fetch": "^2.6.1",
     "stat-mode": "^1.0.0"
   },
   "devDependencies": {
-    "eslint": "^6.8.0",
-    "jest": "^24.9.0"
+    "eslint": "^7.8.1",
+    "jest": "^26.4.2"
   },
   "scripts": {
     "test": "jest",

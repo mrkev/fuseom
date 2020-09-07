@@ -1,5 +1,5 @@
 const { withDir } = require("../pathup");
-const fuse = require("fuse-bindings");
+const fuse = require("fuse-native");
 
 let fd = 1;
 const forStructure = (structure) => (path, flags, cb) => {

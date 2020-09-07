@@ -1,5 +1,5 @@
-const fuse = require("fuse-bindings");
-var events = require("events");
+const Fuse = require("fuse-native");
+const events = require("events");
 
 module.exports = {
   mount(mountPath, structure) {
@@ -16,7 +16,7 @@ module.exports = {
 
     const mounted = new events.EventEmitter();
 
-    fuse.mount(
+    const fuse = new Fuse(
       mountPath,
       {
         // init,
@@ -52,17 +52,19 @@ module.exports = {
         // link,
         // symlink,
         mkdir,
-        rmdir
+        rmdir,
         // destroy,
       },
-      function(err) {
-        if (err) throw err;
-        console.log("filesystem mounted on " + mountPath);
-      }
+      { debug: true }
     );
 
+    fuse.mount(function (err) {
+      if (err) throw err;
+      console.log("filesystem mounted on " + mountPath);
+    });
+
     function attemptUnmount() {
-      fuse.unmount(mountPath, function(err) {
+      fuse.unmount(mountPath, function (err) {
         if (err) {
           console.log(
             "filesystem at " + mountPath + " not unmounted",
@@ -79,5 +81,5 @@ module.exports = {
     process.on("uncaughtException", attemptUnmount);
 
     return mounted;
-  }
+  },
 };
