@@ -1,7 +1,7 @@
 const { pathup, parse, withNode, withDir } = require("../pathup");
 const fuse = require("fuse-bindings");
 
-const forStructure = structure => (src, dest, cb) => {
+const forStructure = (structure) => (src, dest, cb) => {
   if (process.env.VERBOSE) {
     console.log("rename(%s, %s)", src, dest);
   }

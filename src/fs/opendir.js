@@ -2,7 +2,7 @@ const { withDir } = require("../pathup");
 const fuse = require("fuse-bindings");
 
 let fd = 1;
-const forStructure = structure => (path, flags, cb) => {
+const forStructure = (structure) => (path, flags, cb) => {
   if (process.env.VERBOSE) console.log("opendir(%s, %d)", path, flags);
 
   let dir = null;
@@ -22,5 +22,5 @@ const forStructure = structure => (path, flags, cb) => {
 };
 
 module.exports = {
-  forStructure
+  forStructure,
 };

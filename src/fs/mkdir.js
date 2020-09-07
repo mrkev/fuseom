@@ -2,7 +2,7 @@ const { pathup, parse, withNode, withDir } = require("../pathup");
 const fuse = require("fuse-bindings");
 const Directory = require("../om/Directory");
 
-const forStructure = structure => (path, mode, cb) => {
+const forStructure = (structure) => (path, mode, cb) => {
   if (process.env.VERBOSE) {
     console.log("mkdir(%s, %s)", path, mode);
   }

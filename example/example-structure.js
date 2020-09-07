@@ -28,22 +28,22 @@ const simple2 = new Directory({
   children: [
     new File({
       name: "test",
-      contents: "nice\n"
+      contents: "nice\n",
     }),
     new File({
       name: "img.png",
-      contents: image
+      contents: image,
     }),
     new Directory({
       name: "hello",
       children: [
         new File({
           name: "world",
-          contents: "HELLO WORLD\n"
-        })
-      ]
-    })
-  ]
+          contents: "HELLO WORLD\n",
+        }),
+      ],
+    }),
+  ],
 });
 simple2.mode.owner.write = true;
 
@@ -100,5 +100,5 @@ function cleanup() {
 module.exports = {
   simple2,
   startAdding,
-  cleanup
+  cleanup,
 };

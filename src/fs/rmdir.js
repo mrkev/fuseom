@@ -1,7 +1,7 @@
 const { withDir } = require("../pathup");
 const fuse = require("fuse-bindings");
 
-const forStructure = structure => (path, cb) => {
+const forStructure = (structure) => (path, cb) => {
   if (process.env.VERBOSE) console.log("rmdir(%s, %d)", path);
 
   let dir = null;
@@ -16,5 +16,5 @@ const forStructure = structure => (path, cb) => {
 };
 
 module.exports = {
-  forStructure
+  forStructure,
 };

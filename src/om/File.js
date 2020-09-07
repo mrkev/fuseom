@@ -51,7 +51,7 @@ class File extends Node {
       size: this.contents.length,
       mode: this.mode.valueOf(),
       uid: process.getuid ? process.getuid() : 0,
-      gid: process.getgid ? process.getgid() : 0
+      gid: process.getgid ? process.getgid() : 0,
     };
   }
 }

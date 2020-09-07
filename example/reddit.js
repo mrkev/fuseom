@@ -6,16 +6,16 @@ const mountPath = process.platform !== "win32" ? "./mnt" : "M:\\";
 
 const tifu = new Directory({
   name: "root",
-  children: []
+  children: [],
 });
 tifu.mode.owner.write = true;
 
 function getPage(dir, after = null) {
   return fetch(`https://www.reddit.com/r/tifu.json?after=${after}`, {
-    method: "GET"
+    method: "GET",
   })
-    .then(res => res.json())
-    .then(json => {
+    .then((res) => res.json())
+    .then((json) => {
       for (post of json.data.children) {
         const contents = post.data.selftext;
         const name = post.data.title + ".txt";
@@ -25,10 +25,10 @@ function getPage(dir, after = null) {
       if (json.data.after != null) {
         const afterFile = new File({
           name: "_next",
-          contents: "Delete this file to load the next page"
+          contents: "Delete this file to load the next page",
         });
         afterFile.mode.owner.write = true;
-        afterFile.addListener("unlink", function() {
+        afterFile.addListener("unlink", function () {
           dir.removeChild(afterFile);
           const nextDir = new Directory({ name: "next", children: [] });
           nextDir.mode.owner.write = true;

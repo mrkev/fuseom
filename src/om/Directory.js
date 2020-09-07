@@ -38,7 +38,7 @@ class Directory extends Node {
       this.mode.others.execute = true;
     }
 
-    (options.children || []).forEach(node => {
+    (options.children || []).forEach((node) => {
       node.parent = this;
       this.appendChild(node);
     });
@@ -53,7 +53,7 @@ class Directory extends Node {
       size: 100, //todo
       mode: this.mode.valueOf(),
       uid: process.getuid ? process.getuid() : 0,
-      gid: process.getgid ? process.getgid() : 0
+      gid: process.getgid ? process.getgid() : 0,
     };
   }
 

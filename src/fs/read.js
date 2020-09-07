@@ -1,7 +1,7 @@
 const { withFile } = require("../pathup");
 const fuse = require("fuse-bindings");
 
-const forStructure = structure => (path, fd, buf, len, pos, cb) => {
+const forStructure = (structure) => (path, fd, buf, len, pos, cb) => {
   if (process.env.VERBOSE) {
     console.log("read(%s, %d, %d, %d)", path, fd, len, pos);
   }
@@ -27,5 +27,5 @@ const forStructure = structure => (path, fd, buf, len, pos, cb) => {
 };
 
 module.exports = {
-  forStructure
+  forStructure,
 };
