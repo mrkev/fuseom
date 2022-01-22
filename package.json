@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "dependencies": {
     "fuse-native": "^2.2.6",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^3.1.1",
     "stat-mode": "^1.0.0"
   },
   "devDependencies": {
