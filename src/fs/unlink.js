@@ -1,6 +1,6 @@
 const { withFile } = require("../pathup");
-const fuse = require("fuse-native");
 
+/** Unlink: Remove a file */
 const forStructure = (structure) => (path, cb) => {
   if (process.env.VERBOSE) console.log("unlink(%s, %d)", path);
 

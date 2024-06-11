@@ -2,7 +2,7 @@ const Fuse = require("fuse-native");
 const events = require("events");
 
 module.exports = {
-  mount(mountPath, structure) {
+  mount(mountPath: string, structure) {
     const getattr = require("./fs/getattr").forStructure(structure);
     const open = require("./fs/open").forStructure(structure);
     const read = require("./fs/read").forStructure(structure);

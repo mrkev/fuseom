@@ -1,4 +1,4 @@
-const { mount } = require("../src/index.js");
+const { mount } = require("../src/index");
 
 const { simple2, startAdding, cleanup } = require("./example-structure");
 

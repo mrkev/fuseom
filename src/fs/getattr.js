@@ -1,5 +1,5 @@
 const { pathup } = require("../pathup");
-const fuse = require("fuse-native");
+const Fuse = require("fuse-native");
 
 const forStructure = (structure) => (path, cb) => {
   if (process.env.VERBOSE) {
@@ -15,7 +15,7 @@ const forStructure = (structure) => (path, cb) => {
   }
 
   if (obj === null) {
-    cb(fuse.ENOENT);
+    cb(Fuse.ENOENT);
     return;
   } else if (obj._type === "__dir") {
     cb(0, obj.getAttr());
@@ -26,7 +26,7 @@ const forStructure = (structure) => (path, cb) => {
     return;
   } else {
     console.log("INVALID OBJECT OF TYPE", obj._type);
-    cb(fuse.ENOENT);
+    cb(Fuse.ENOENT);
     return;
   }
 };

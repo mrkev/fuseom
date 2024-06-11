@@ -1,6 +1,6 @@
 // Parses a path
 // string -> array of entries to follow
-function parse(path) {
+function parse(path: string): Array<string> {
   const arrpath = path.split("/").reduce((acc, x) => {
     if (x === "") return acc;
     if (x === ".") return acc;
@@ -17,7 +17,7 @@ function parse(path) {
 
 // Returns the object representing a path in the structure
 // [string | Array] -> obj
-function pathup(path, arch) {
+function pathup(path: string | Array<string>, arch) {
   if (arch._type !== "__dir") {
     throw new Error("ROOT is not a __dir");
   }
@@ -45,7 +45,7 @@ function pathup(path, arch) {
 
 // Returns a directory or null if none was found
 // [string | Array] -> Directory + throws
-function withDir(path, structure) {
+function withDir(path: string | Array<string>, structure) {
   let obj = pathup(path, structure);
 
   if (obj === null) {
@@ -61,7 +61,7 @@ function withDir(path, structure) {
 
 // Returns a directory or null if none was found
 // [string | Array] -> File + throws
-function withFile(path, structure) {
+function withFile(path: string | Array<string>, structure) {
   let obj = pathup(path, structure);
 
   if (obj === null) {
@@ -77,7 +77,7 @@ function withFile(path, structure) {
 
 // Returns any node if one was found
 // [string | Array] -> Node + throws
-function withNode(path, structure) {
+function withNode(path: string | Array<string>, structure) {
   let obj = pathup(path, structure);
 
   if (obj === null) {
@@ -96,5 +96,5 @@ module.exports = {
   pathup,
   withFile,
   withDir,
-  withNode
+  withNode,
 };

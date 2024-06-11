@@ -1,6 +1,6 @@
 const fetch = require("node-fetch");
-const Directory = require("../src/om/Directory.js");
-const File = require("../src/om/File.js");
+const Directory = require("../src/om/Directory.ts");
+const File = require("../src/om/File");
 const { mount } = require("../src/index.js");
 const mountPath = process.platform !== "win32" ? "./mnt" : "M:\\";
 

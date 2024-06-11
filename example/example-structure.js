@@ -1,5 +1,5 @@
-const Directory = require("../src/om/Directory.js");
-const File = require("../src/om/File.js");
+const Directory = require("../src/om/Directory");
+const File = require("../src/om/File");
 
 const image = Buffer.from(
   "iVBORw0KGgoAAAANSUhEUgAAABkAAAATCAYAAABlcqYFAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAA" +

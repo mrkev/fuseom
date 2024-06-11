@@ -1,14 +1,26 @@
-const Node = require("./Node.js");
-const Mode = require("stat-mode");
+import FSNode from "./FSNode";
+import { Mode } from "stat-mode";
 
-class Directory extends Node {
+type Options = {
+  name?: string;
+  mtime: Date;
+  atime: Date;
+  ctime: Date;
+  nlink: any; // todo
+  mode: number;
+  children: Array<FSNode>;
+};
+
+class Directory extends FSNode {
   get _type() {
     return "__dir";
   }
 
-  constructor(options = {}) {
-    super();
-    this.name = options.name || "untitled";
+  constructor(optionsArg: Options) {
+    const options = optionsArg ?? ({} as Options);
+    const name = options.name || "untitled";
+    super(name);
+
     if (!options.name) {
       console.warn(
         "A directory wasn't given a name. Going with default 'undefined'."
@@ -57,8 +69,8 @@ class Directory extends Node {
     };
   }
 
-  appendChild(node) {
-    if (!(node instanceof Node)) {
+  appendChild(node: FSNode): void {
+    if (!(node instanceof FSNode)) {
       console.error("Can't append non-node to directory.");
       return;
     }
@@ -71,9 +83,9 @@ class Directory extends Node {
     this.children[node.name] = node;
   }
 
-  removeChild(node) {
-    if (!(node instanceof Node)) {
-      console.error("Can't remove non-node from directory.");
+  removeChild(node: FSNode): void {
+    if (!(node instanceof FSNode)) {
+      console.error("Can't remove nson-node from directory.");
       return;
     }
     if (this.children[node.name]) {
@@ -82,7 +94,7 @@ class Directory extends Node {
     }
   }
 
-  getChildNamed(name) {
+  getChildNamed(name: string): FSNode | null {
     if (this.children[name]) {
       return this.children[name];
     }

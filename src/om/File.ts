@@ -1,15 +1,26 @@
-const Node = require("./Node.js");
-const Mode = require("stat-mode");
+import FSNode from "./FSNode";
+import { Mode } from "stat-mode";
 
-class File extends Node {
+type Options = {
+  mtime?: Date;
+  atime?: Date;
+  ctime?: Date;
+  name?: string;
+  mode?: number;
+  contents?: string;
+  nlink?: any; // todo
+};
+
+class FSFile extends FSNode {
   get _type() {
     return "__file";
   }
 
-  constructor(options = {}) {
-    super();
+  constructor(optionsArg: Options) {
+    const options = optionsArg ?? ({} as Options);
+    const name = options.name || "untitled";
+    super(name);
 
-    this.name = options.name || "untitled";
     if (!options.name) {
       console.warn(
         "A file wasn't given a name. Going with default 'undefined'."
@@ -56,4 +67,4 @@ class File extends Node {
   }
 }
 
-module.exports = File;
+module.exports = FSFile;
